@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+<!-- 这是默认配置信息 -->
+<default-config>
+<!-- 连接四大参数配置 -->
+<property name="jdbcUrl">jdbc:sqlserver://localhost:1434;instanceName=MYSQL2;DatabaseName=sdbi</property>
+<property name="driverClass">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+<property name="user">sa</property>
+<property name="password">123456</property>
+<!-- 池参数配置 -->
+ <property name="acquireIncrement">5</property>
+ <property name="initialPoolSize">20</property>
+ <property name="minPoolSize">2</property>
+ <property name="maxPoolSize">50</property>
+</default-config>
+
+<!-- 这是名称为sdbi的配置信息 -->
+ <named-config name="sdbi">
+<!-- 连接四大参数配置 -->
+<property name="jdbcUrl">jdbc:sqlserver://localhost:1434;instanceName=MYSQL2;DatabaseName=sdbi
+</property>
+<property name="driverClass">com.microsoft.sqlserver.jdbc.SQLServerDriver
+</property>
+<property name="user">sa</property>
+<property name="password">123456</property>
+<!-- 池参数配置 -->
+<property name="acquireIncrement">3</property>
+<property name="initialPoolSize">30</property>
+<property name="minPoolSize">8</property>
+<property name="maxPoolSize">100</property>
+ </named-config>
+ 
+ 
+</c3p0-config>
