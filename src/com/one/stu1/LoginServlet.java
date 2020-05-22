@@ -18,54 +18,54 @@ import beans.Student;
 public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 					HttpServletResponse response) throws ServletException, IOException {
-						doPost(request, response); // Ò»¶¨²»ÒªÍü¼Ç
+						doPost(request, response); // ä¸€å®šä¸è¦å¿˜è®°
 								}
 	protected void doPost(HttpServletRequest request,
 					HttpServletResponse response) throws ServletException, IOException {
 				request.setCharacterEncoding("utf-8");
 				response.setContentType("text/html;charset=gb2312");
-				String userid = request.getParameter("userid");//»ñÈ¡ÕËºÅ
-				String password = request.getParameter("password");//»ñÈ¡ÃÜÂë
-				String user=request.getParameter("user");//ÅĞ¶ÏÓÃ»§Éí·İ£¬Ñ§Éú»¹ÊÇ¹ÜÀíÔ±
-				String verifyCode = request.getParameter("verify_code");//»ñÈ¡ÑéÖ¤Âë
+				String userid = request.getParameter("userid");//è·å–è´¦å·
+				String password = request.getParameter("password");//è·å–å¯†ç 
+				String user=request.getParameter("user");//åˆ¤æ–­ç”¨æˆ·èº«ä»½ï¼Œå­¦ç”Ÿè¿˜æ˜¯ç®¡ç†å‘˜
+				String verifyCode = request.getParameter("verify_code");//è·å–éªŒè¯ç 
 				String sessionVerifyCode = (String) request.getSession().getAttribute("sessionVerifyCode");
 				PrintWriter out = response.getWriter();
 				
-				//ÅĞ¶ÏÑéÖ¤ÂëÊÇ·ñÕıÈ·
+				//åˆ¤æ–­éªŒè¯ç æ˜¯å¦æ­£ç¡®
 				if(verifyCode.equals(sessionVerifyCode)){
 			
-				if(user==null||password==null){//Î´ÊäÈëÃÜÂë
-					//System.out.println("µÇÂ¼Ê§°Ü£¡");
-					out.print("<script>alert('µÇÂ¼Ê§°Ü£¡ÇëÊäÈëÕËºÅºÍÃÜÂë');"+ "window.location.href='./index.jsp'</script>");
+				if(user==null||password==null){//æœªè¾“å…¥å¯†ç 
+					//System.out.println("ç™»å½•å¤±è´¥ï¼");
+					out.print("<script>alert('ç™»å½•å¤±è´¥ï¼è¯·è¾“å…¥è´¦å·å’Œå¯†ç ');"+ "window.location.href='./index.jsp'</script>");
 				}else{
-					if(user.equals("student")){//Ñ§ÉúµÇÂ¼Ê±
+					if(user.equals("student")){//å­¦ç”Ÿç™»å½•æ—¶
 						try {
 							Student student=UserDAO.findstudent(userid);
-							if(student.getPassword().equals(password)){
+							if(student.getStudentid().equals(userid)&&student.getPassword().equals(password)){
 								HttpSession session = request.getSession();
-								session.setAttribute("student",student);//±£´æÓÃ»§Ãû
+								session.setAttribute("student",student);//ä¿å­˜ç”¨æˆ·å
 								
-								//System.out.println("µÇÂ¼³É¹¦£¡");
+								//System.out.println("ç™»å½•æˆåŠŸï¼");
 								response.sendRedirect("./welcome.jsp");
 							}else {
-								System.out.println("µÇÂ¼Ê§°Ü£¡");
-								out.print("<script>alert('µÇÂ¼Ê§°Ü£¡ÇëÈ·ÈÏÕËºÅºÍÃÜÂë');"
+								System.out.println("ç™»å½•å¤±è´¥ï¼");
+								out.print("<script>alert('ç™»å½•å¤±è´¥ï¼è¯·ç¡®è®¤è´¦å·å’Œå¯†ç ');"
 										+ "window.location.href='./index.jsp'</script>");
 							}
 						   } catch (Exception e) {
 							e.printStackTrace();}
-					}else{//¹ÜÀíÔ±µÇÂ½Ê±
+					}else{//ç®¡ç†å‘˜ç™»é™†æ—¶
 						try {
 							Admin admin=UserDAO.findadmin(userid);
-							if(admin.getPassword().equals(password)){
+							if(admin.getAdminid().equals(userid)&&admin.getPassword().equals(password)){
 								HttpSession session = request.getSession();
-								session.setAttribute("admin",admin);	//±£´æÓÃ»§Ãû
+								session.setAttribute("admin",admin);	//ä¿å­˜ç”¨æˆ·å
 								
-								//System.out.println("µÇÂ¼³É¹¦£¡");
+								//System.out.println("ç™»å½•æˆåŠŸï¼");
 								response.sendRedirect("./adm_menu.jsp");
 							}else{	
-									//System.out.println("µÇÂ¼Ê§°Ü£¡");
-								out.print("<script>alert('µÇÂ¼Ê§°Ü£¡ÇëÈ·ÈÏÕËºÅºÍÃÜÂë');"
+									//System.out.println("ç™»å½•å¤±è´¥ï¼");
+								out.print("<script>alert('ç™»å½•å¤±è´¥ï¼è¯·ç¡®è®¤è´¦å·å’Œå¯†ç ');"
 										+ "window.location.href='./index.jsp'</script>");}
 							} catch (Exception e) {
 							e.printStackTrace();}
@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				
 				}else{
-					out.print("<script>alert('µÇÂ¼Ê§°Ü£¡ÇëÊäÈëÕıÈ·µÄÑéÖ¤Âë');"
+					out.print("<script>alert('ç™»å½•å¤±è´¥ï¼è¯·è¾“å…¥æ­£ç¡®çš„éªŒè¯ç ');"
 							+ "window.location.href='./index.jsp'</script>");}
 	}
 				
@@ -81,15 +81,15 @@ public class LoginServlet extends HttpServlet {
 
 
 //				if ("admin".equalsIgnoreCase(userid)&& "123".equalsIgnoreCase(password)&& sessionVerifyCode.equalsIgnoreCase(verifyCode)) {
-//		// µÇÂ¼³É¹¦
+//		// ç™»å½•æˆåŠŸ
 //		HttpSession session = request.getSession();
-//		session.setAttribute("username", userid); // Ïò HttpSession ÓòÖĞ±£´æÓÃ»§Ãû
+//		session.setAttribute("username", userid); // å‘ HttpSession åŸŸä¸­ä¿å­˜ç”¨æˆ·å
 //		response.sendRedirect("./welcome.jsp");
 //				} else if (sessionVerifyCode.equalsIgnoreCase(verifyCode)) {
-//					// µÇÂ¼Ê§°Ü
-//					response.getWriter().print("ÓÃ»§Ãû»òÃÜÂë´íÎó£¡");
+//					// ç™»å½•å¤±è´¥
+//					response.getWriter().print("ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼");
 //					} else {
-//					response.getWriter().print("ÑéÖ¤Âë´íÎó£¡");
+//					response.getWriter().print("éªŒè¯ç é”™è¯¯ï¼");
 //					}
 				
 
